@@ -1,0 +1,16 @@
+1698092724812	Copy package
+1698092769292	Delete element
+1698092774695	Delete element
+1698093348161	Delete element
+1698097818661	Delete element
+1698098723588	Rename package 'jdbc.daofactory'
+1698098750208	Rename type 'StudentDaoFactory'
+1698098790409	Delete element
+1698099140724	Rename type 'UserService'
+1698101873281	Move 'index.jsp' to 'WEB-INF'
+1698101910375	Move 'index.jsp' to 'webapp'
+1698169696238	Move 'home.jsp' to 'WEB-INF'
+1698169700599	Move 'home.jsp' to 'webapp'
+1698171883531	Move 'addNotes.jsp' to 'webapp'
+1698179095238	Rename type 'Post'
+1698258879407	Rename resource 'showNotesjsp.jsp'

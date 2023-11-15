@@ -1,0 +1,17 @@
+package com.servicefactory;
+import com.service.IPostService;
+import com.service.PostService;
+
+public class PostServiceFactory {
+
+	private PostServiceFactory() {}
+	
+	private  IPostService Postservice = null;
+	
+	public IPostService getIPostService() {
+		if (Postservice == null) {
+			Postservice = new PostService();
+		}
+		return Postservice;
+	}
+}

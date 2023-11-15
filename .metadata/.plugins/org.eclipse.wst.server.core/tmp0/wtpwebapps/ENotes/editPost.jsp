@@ -1,0 +1,49 @@
+<%@page import="com.User.UserDetails"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+<%
+  UserDetails user1 = (UserDetails) session.getAttribute("User");
+  if (user1 == null)
+	response.sendRedirect("LoginPage.jsp");
+  
+  Integer noteid = Integer.parseInt(request.getParameter("note_id"));
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<%@ include file="Components/allcss.jsp"%>
+</head>
+<body>
+	<%@include file="Components/Navbar.jsp"%>
+			<div class="col">
+		<h1 class=" col-md-6 mx-auto">Edit Note</h1>
+		<div class="card container-fluid col-md-6">
+
+			<form method="post" action="./UserServlet/editPost">
+				<input type="text" hidden name="uid" value= <%= noteid %>>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Title</label> <input
+						name="title" type="text" class="form-control"
+						id="exampleInputEmail1" aria-describedby="emailHelp" required>
+
+					<div class="mb-3">
+						<label for="exampleInputPText1" class="form-label">Note</label>
+						<textarea row="10" name="content" type="text" class="form-control"
+							id="exampleInputPassword1" required></textarea>
+					</div>
+					
+					<div class="d-flex justify-content-center container text-center mt-2">
+							<a href = "showNotes.jsp" class=" mx-2 btn btn-danger">Cancel</a>
+							<button href="addNotes.jsp" type="submit" class="btn btn-primary">Edit</button>
+					</div>
+					
+				</div>
+			</form>
+
+		</div>
+	</div>
+</body>
+</html>

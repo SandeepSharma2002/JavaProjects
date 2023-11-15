@@ -1,0 +1,19 @@
+package com.dao;
+
+import java.sql.Connection;
+
+import com.db.DBconnect;
+
+public class UserDao{
+	
+	public void name() {
+		
+	try {
+		Connection connection = DBconnect.getJdbcConnection();
+		System.out.println(connection);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+}

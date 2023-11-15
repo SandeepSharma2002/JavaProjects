@@ -1,0 +1,7 @@
+package com.dao;
+
+public interface IPostDao {
+	
+	public boolean addNotes(String title, String content, int uid);
+	
+}

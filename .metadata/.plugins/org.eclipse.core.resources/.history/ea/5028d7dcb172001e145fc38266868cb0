@@ -1,0 +1,20 @@
+package com.daofactory;
+
+import com.dao.IPostDao;
+import com.dao.PostDao;
+
+public class PostDaoFactory {
+
+	private PostDaoFactory() {}
+	
+	private static IPostDao postDao = null;
+	
+	public static IPostDao getIPostDao() {
+		if(postDao == null)
+		{
+			postDao = new PostDao();
+		}
+		return postDao;
+		
+	}
+}

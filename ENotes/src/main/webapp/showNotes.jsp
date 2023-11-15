@@ -1,0 +1,80 @@
+<%@page import="com.User.PostDetails"%>
+<%@page import="java.util.List"%>
+<%@page import="com.servicefactory.PostServiceFactory"%>
+<%@page import="com.service.IPostService"%>
+<%@page import="com.dao.PostDao"%>
+<%@page import="com.User.UserDetails"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%
+UserDetails user1 = (UserDetails) session.getAttribute("User");
+
+if (user1 == null)
+	response.sendRedirect("LoginPage.jsp");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<%@ include file="Components/allcss.jsp"%>
+<title>Notes</title>
+</head>
+<body>
+	<%@include file="Components/Navbar.jsp"%>
+	<div class="container">
+		<h2 class="text-center">All Notes</h2>
+
+		<%
+		if (user1 != null) {
+			IPostService postService = PostServiceFactory.getPostService();
+			List<PostDetails> list = postService.getPosts(user1.getId());
+			for (PostDetails pd : list) {
+
+			
+			%>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card mt-3">
+
+					<div class="card-body p-4">
+
+						<h5 class="card-title"><%= pd.getTitle() %></h5>
+						
+						<%
+					String regmsg = (String) session.getAttribute("Note-deleted");
+					if (regmsg != null) {
+					%>
+					<div style="color: green; text-align: center;"><%=regmsg%>
+					</div>
+					<%
+					}
+					session.removeAttribute("Note-deleted");
+					session.removeAttribute("NotDeleted-msg");
+					%>
+					
+						<p><%= pd.getContent() %></p>
+						
+						<div class = "d-flex justify-content-between">
+							<div class = "d-flex "><b class="text-success px-1"> Published By: </b><div><%= user1.getName() %></div></div>
+							<div class = "d-flex"><b class="text-success px-1"> Published Date: </b><div><%= pd.getDate() %> </div></div>
+						</div>
+
+						<div class="d-flex justify-content-center container text-center mt-2">
+						<form method = "post" action = "./UserServlet/deletePost?note_id=<%= pd.getId() %>">
+							<button class=" mx-2 btn btn-danger">Delete</button>
+						</form>
+							<a href="editPost.jsp?note_id=<%= pd.getId() %>" class="btn btn-primary">Edit</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	<%} }
+		%>
+	</div>
+</body>
+</html>

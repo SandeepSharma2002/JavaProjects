@@ -1,0 +1,28 @@
+package com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.User.PostDetails;
+import com.db.DBconnect;
+
+public class PostDao implements IPostDao{
+	
+	PreparedStatement pStatement = null;
+	Connection connection = null;
+	ResultSet resultSet = null;
+	String sqlQuery = null;
+	
+	@Override
+	public boolean AddNotes( PostDetails post)
+	{
+		try {
+			connection = DBconnect.getJdbcConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+}

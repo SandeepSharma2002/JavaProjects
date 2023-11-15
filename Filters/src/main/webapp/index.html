@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="FormContainer">
+        <div class="ImgContainer">
+        </div>
+        <form id="Form" action = "servlet1">
+            <h1 id="FormHeading">Sign Up</h1>
+            <div class="Name">
+                <li><label>First Name:</label>
+                    <input type="text" placeholder="John" name = "fname">
+                </li>
+                <li><label>Last Name:</label>
+                    <input type="text" placeholder="Doe" name = "lname">
+                </li>
+            </div>
+            <li>
+                <label>Email:</label>
+                <input type="text" placeholder="johndoe123@gmail.com" name = "email">
+            </li>
+            <div class="Phone">
+                <li><label>Country:</label>
+                    <select>
+                        <option>Afghanistan</option>
+                        <option>Albania</option>
+                        <option>Algeria</option>
+                        <option>Andorra</option>
+                        <option>Angola</option>
+                        <option>Argentina</option>
+                        <option>Armenia</option>
+                        <option>Australia</option>
+                        <option>Austria</option>
+                        <option>Azerbaijan</option>
+                        <option>Croatia</option>
+
+                        <select>
+                <li>
+                    <label>Phone No:</label><input type="text" placeholder="91-123456-7890" name = "phone">
+                </li>
+            </div>
+            <div class="password">
+                <li><label>Password:</label> <input type="text" name = "pass"></li>
+                <li><label>Confirm Password:</label> <input type="text" name = "cpass"></li>
+            </div>
+            <li class="Subscribe">
+                <div class="CheckBoxCont" onclick="ToggleCheckBox(this)" data-status="true">
+                    <div class="tick">
+                        <hr class="Tickline1">
+                        <hr class="Tickline2">
+                    </div>
+                </div><label for="subscribe">I want to get updates.</label>
+            </li>
+            <button type="submit">Sign Up</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

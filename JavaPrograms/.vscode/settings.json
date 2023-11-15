@@ -1,0 +1,12 @@
+{
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "mysql-connector-j-8.1.0/mysql-connector-j-8.1.0.jar"
+        ],
+        "exclude": [
+            "mysql-connector-j-8.1.0.jar"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+package com.servicefactory;
+
+public class UserServiceFactory {
+
+private UserServiceFactory() {
+		
+	}
+	private static IStudentService studentService = null;
+	
+	public static IStudentService getStudentService()
+	{
+		if(studentService == null)
+			studentService = new StudentServiceImpl();
+		return studentService;
+	}
+	
+}

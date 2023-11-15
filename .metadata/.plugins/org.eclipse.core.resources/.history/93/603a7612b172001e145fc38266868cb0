@@ -1,0 +1,9 @@
+package com.dao;
+
+import com.User.PostDetails;
+
+public interface IPostDao {
+	
+	public boolean AddNotes(String title, String content, int uid);
+	
+}

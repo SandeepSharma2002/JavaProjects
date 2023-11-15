@@ -1,0 +1,6 @@
+package com.service;
+
+public interface IPostService {
+
+	public boolean AddNotes(String Title, String Content, int uid );
+}

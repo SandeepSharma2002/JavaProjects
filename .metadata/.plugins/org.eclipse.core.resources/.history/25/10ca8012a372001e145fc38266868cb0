@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<%@ include file="Components/allcss.jsp"%>
+<title>Insert title here</title>
+</head>
+<body>
+	<%@include file="Components/Navbar.jsp"%>
+	
+	<div class="col">
+	<h1 class=" col-md-6 mx-auto">Add Your Notes</h1>
+		<div class="card container-fluid col-md-6">
+             
+			<form>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Title</label> <input
+						type="text" class="form-control" id="exampleInputEmail1"
+						aria-describedby="emailHelp">
+
+					<div class="mb-3">
+						<label for="exampleInputPText1" class="form-label">Note</label> <textarea
+						row ="10"	type="text" class="form-control" id="exampleInputPassword1"></textarea>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</body>
+</html>

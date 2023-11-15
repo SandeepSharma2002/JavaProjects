@@ -1,0 +1,5 @@
+package com.servicefactory;
+
+public class PostServiceFactory {
+
+}

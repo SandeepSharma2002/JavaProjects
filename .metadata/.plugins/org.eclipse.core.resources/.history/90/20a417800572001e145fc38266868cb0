@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Register Page</title>
+<%@ include file="Components/allcss.jsp"%>
+</head>
+<body>
+	<%@include file="Components/Navbar.jsp"%>
+	<div class="card container-fluid col-md-6">
+		<div class="card-body">
+			<form method = "post" action="./UserServlet/adduser">
+				
+				
+				<% String regmsg = (String) session.getAttribute("reg-success");
+				System.out.println(regmsg);
+				if(regmsg!= null) {%>
+				<div style="color:green; text-align:center;"><%= regmsg %><a href = "LoginPage.jsp">Login</a></div>
+				<% } session.removeAttribute("reg-success"); %>
+				<%
+				String Failedmsg = (String) session.getAttribute("failed-msg");
+				if(Failedmsg!= null ){%>
+				<div style="color:red; text-align:center;"><%= Failedmsg%></div>
+				<%  }session.removeAttribute("failed-msg"); %>
+				
+				<div class="mb-3" >
+					<label for="exampleInputEmail1" class="form-label">Enter
+						Name</label> <input name= "Name" type="text" class="form-control"
+						id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Email
+						address</label> <input name= "Email" type="email" class="form-control"
+						id="exampleInputEmail1" aria-describedby="emailHelp">
+
+				</div>
+				<div class="mb-3">
+					<label for="exampleInputPassword1" class="form-label">Password</label>
+					<input name="Password" type="password" class="form-control"
+						id="exampleInputPassword1">
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+
+
+</body>
+</html>

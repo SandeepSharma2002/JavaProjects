@@ -1,0 +1,169 @@
+package com.Servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.User.PostDetails;
+import com.User.UserDetails;
+import com.dao.IPostDao;
+import com.dao.PostDao;
+import com.service.IPostService;
+import com.service.IUserService;
+import com.service.PostService;
+import com.servicefactory.PostServiceFactory;
+import com.servicefactory.UserServiceFactory;
+
+@WebServlet("/UserServlet/*")
+public class UserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	doProcess(request, response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
+	private void doProcess(HttpServletRequest request, HttpServletResponse response) {
+		IUserService userService = UserServiceFactory.getUserService();
+		IPostService postService = PostServiceFactory.getPostService();
+		
+		if(request.getRequestURI().endsWith("adduser"))
+		{
+			String name = request.getParameter("Name"); 
+			String email = request.getParameter("Email");
+			String password = request.getParameter("Password");
+			UserDetails std = new UserDetails(); 
+			std.setName(name);
+			std.setEmail(email);
+			std.setPassword(password);
+			
+			String status = userService.addUser(std);
+			try {
+			HttpSession session;
+			if (status.equalsIgnoreCase("success")){
+				session = request.getSession();
+				session.setAttribute("reg-success","Successfull");
+				response.sendRedirect("/ENotes/RegisterPage.jsp");
+			} else {
+				session = request.getSession();
+				session.setAttribute("failed-msg","Failed");
+				response.sendRedirect("/ENotes/RegisterPage.jsp");
+					}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(request.getRequestURI().endsWith("loginuser"))
+		{
+			String email = request.getParameter("Email");
+			String password = request.getParameter("Password");
+			UserDetails user = (UserDetails) userService.LoginUser(email,password);
+			
+			try {
+			HttpSession session;
+			if (user != null){
+				HttpSession session2 =request.getSession();
+				session2.setAttribute("User", user);
+				response.sendRedirect("/ENotes/home.jsp");
+				
+			} else {
+				session = request.getSession();
+				session.setAttribute("failed-msg","Something Went Wrong!");
+				response.sendRedirect("/ENotes/LoginPage.jsp");
+					}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(request.getRequestURI().endsWith("addnotes"))
+		{
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			String title = request.getParameter("title");
+			String content = request.getParameter("content"); 
+			
+			boolean status = postService.addNotes(title, content, uid);
+			try {
+				HttpSession session;
+				if (status){
+					session = request.getSession();
+					session.setAttribute("Note-added","Note Added Successfully");
+					response.sendRedirect("/ENotes/addNotes.jsp");
+				} else {
+					session = request.getSession();
+					session.setAttribute("failed-note","Note Not Inserted");
+					response.sendRedirect("/ENotes/addNotes.jsp");
+						}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		if(request.getRequestURI().endsWith("logout"))
+		{
+			try {
+			
+				HttpSession session =request.getSession();
+				session.removeAttribute("User");
+				response.sendRedirect("/ENotes/LoginPage.jsp");
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(request.getRequestURI().endsWith("editPost"))
+		{
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			String title = request.getParameter("title");
+			String content = request.getParameter("content"); 
+			System.out.println("title= " + title );
+			boolean status = postService.editNote(title, content, uid);
+			System.out.println(status);
+			try {
+				HttpSession session;
+				if (status){
+					session = request.getSession();
+					session.setAttribute("Note-added","Note Added Successfully");
+					response.sendRedirect("/ENotes/showNotes.jsp");
+				} else {
+					session = request.getSession();
+					session.setAttribute("failed-note","Note Not Inserted");
+					response.sendRedirect("/ENotes/showNotes.jsp");
+						}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		if(request.getRequestURI().endsWith("deletePost"))
+		{
+			int postid = Integer.parseInt(request.getParameter("note_id"));
+			boolean status = postService.deleteNote(postid);
+			System.out.println(status);
+			try {
+				HttpSession session;
+				if (status){
+					session = request.getSession();
+					session.setAttribute("Note-added","Note Added Successfully");
+					response.sendRedirect("/ENotes/showNotes.jsp");
+				} else {
+					session = request.getSession();
+					session.setAttribute("failed-note","Note Not Inserted");
+					response.sendRedirect("/ENotes/showNotes.jsp");
+						}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+}

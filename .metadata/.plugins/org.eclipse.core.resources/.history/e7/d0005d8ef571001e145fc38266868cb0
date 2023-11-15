@@ -1,0 +1,4 @@
+
+jdbcUrl =jdbc:mysql://localhost:3306/e-notes?useSSL=false
+dataSource.user=root
+dataSource.password=12345

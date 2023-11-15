@@ -1,0 +1,17 @@
+package com.service;
+
+import com.dao.IPostDao;
+import com.daofactory.PostDaoFactory;
+
+public class PostService implements IPostService{
+
+	private IPostDao postDao;
+	
+	@Override
+	public boolean addNotes(String Title, String Content, int uid) {
+		postDao = PostDaoFactory.getPostDao();
+		if(postDao !=  null) return postDao.AddNotes(Title, Content, uid);
+		else
+		return false;
+	}
+}

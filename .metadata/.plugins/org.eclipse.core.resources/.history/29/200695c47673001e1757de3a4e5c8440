@@ -1,0 +1,145 @@
+package com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.User.PostDetails;
+import com.db.DBconnect;
+
+public class PostDao implements IPostDao {
+
+	PreparedStatement pStatement = null;
+	Connection connection = null;
+	ResultSet resultSet = null;
+	String sqlQuery = null;
+
+	@Override
+	public boolean addNotes(String title, String content, int uid) {
+
+		try {
+			connection = DBconnect.getJdbcConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String sqlQuery = " insert into notes(title,content,uid) values (?,?,?)";
+		if (connection != null) {
+			try {
+				pStatement = connection.prepareStatement(sqlQuery);
+				pStatement.setString(1, title);
+				pStatement.setString(2, content);
+				pStatement.setInt(3, uid);
+
+				int i = pStatement.executeUpdate();
+
+				if (i == 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				try {
+					DBconnect.closeup(connection, pStatement, resultSet);
+				} catch (SQLException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return false;
+	}
+
+	@Override
+	public List<PostDetails> getPosts(int id) {
+		List<PostDetails> list = new ArrayList<PostDetails>();
+		
+		
+		try {
+			connection = DBconnect.getJdbcConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		String sqlQuery = "select * from notes where uid = ? ";
+		if (connection != null) {
+			try {
+				pStatement = connection.prepareStatement(sqlQuery);
+				pStatement.setInt(1, id);
+				resultSet = pStatement.executeQuery();
+				
+
+				while(resultSet.next()) {
+					PostDetails post = new PostDetails(); 
+					post.setId(resultSet.getInt(1));
+					post.setTitle(resultSet.getString(2));
+					post.setContent(resultSet.getString(3));
+					post.setDate(resultSet.getTimestamp(4));
+					list.add(post);
+				}
+				return list;
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				try {
+					DBconnect.closeup(connection, pStatement, resultSet);
+				} catch (SQLException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return null;
+	}
+	public boolean editNote(String title, String content, int id) {
+
+		try {
+			connection = DBconnect.getJdbcConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String sqlQuery = "UPDATE notes SET title = ?, content = ? WHERE id = ? ";
+		if (connection != null) {
+			try {
+				pStatement = connection.prepareStatement(sqlQuery);
+				pStatement.setString(1, title);
+				pStatement.setString(2, content);
+				pStatement.setInt(3, id);
+
+				int i = pStatement.executeUpdate();
+
+				if (i == 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				try {
+					DBconnect.closeup(connection, pStatement, resultSet);
+				} catch (SQLException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return false;
+	}
+
+
+}
